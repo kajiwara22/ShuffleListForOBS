@@ -27,13 +27,14 @@ const loadUser = function(useEffect = false){
       const shuffledLines = shuffleArray(data,seed)
       shuffledLines.forEach(function(line) {
         const listItem = document.createElement("li");
+        listItem.className = "effectTarget"
         const textNode = document.createTextNode(line);
         listItem.appendChild(textNode);
         userList.appendChild(listItem);
      });
       if(useEffect)
       {
-        const elementList = document.querySelectorAll('li');
+        const elementList = document.querySelectorAll('.effectTarget');
         const effectList = new Array();
         for (let i = 0; i < elementList.length; i++) {
           let element = elementList[i];
