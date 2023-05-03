@@ -23,8 +23,8 @@ const loadUser = function(useEffect = false){
     fetch("users.txt?time=" + new Date().getTime()) // example.txtはテキストファイルのパスに置き換えてください。
     .then(response => response.text())
     .then(data => {
-      const seed = new Random(shuffleSourceSeed)
-      const shuffledLines = shuffleArray(data,seed)
+      const rng = new Random(shuffleSourceSeed)
+      const shuffledLines = shuffleArray(data,rng)
       shuffledLines.forEach(function(line) {
         const listItem = document.createElement("li");
         listItem.className = "effectTarget"
@@ -45,8 +45,8 @@ const loadUser = function(useEffect = false){
     });
 }
 const shuffleUser = function(){
-  const seed =  new Random(shuffleSourceSeed)
-  shuffleSourceSeed = seed.nextInt(10000000,99999999)
+  const rng =  new Random(shuffleSourceSeed)
+  shuffleSourceSeed = rng.nextInt(10000000,99999999)
   localStorage.setItem("sourceSeed",shuffleSourceSeed)
   loadUser(useEffect=true);
 }
@@ -73,18 +73,17 @@ class Random {
   }
 }
 
-function shuffleArray(data, seed) {
+function shuffleArray(data, rng) {
   const array = data.split("\n")
   const shuffledArray = array.slice(); // 元の配列のコピーを作成
   // Fisher-Yates Shuffle Algorithm
   for (let i = shuffledArray.length - 1; i > 0; i--) {
-    let shuffleSeed = seed.nextInt(0,i)
-    const j = shuffleSeed;
-    console.log(i,j)
+    let j = rng.nextInt(0,i)
+    console.info(i,j)
     if (i >= 0 && i < shuffledArray.length && j >= 0 && j < shuffledArray.length) {
       [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
     }else{
-      console.log("入れ替え処理を行いませんでした",i,j)
+      console.warn("入れ替え処理を行いませんでした",i,j)
     }
   }
   return shuffledArray
