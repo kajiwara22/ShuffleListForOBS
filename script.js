@@ -26,7 +26,7 @@ const loadUser = function(useEffect = false){
       const seed = new Random(shuffleSourceSeed)
       const shuffledLines = shuffleArray(data,seed)
       shuffledLines.forEach(function(line) {
-        const listItem = document.creataeElement("li");
+        const listItem = document.createElement("li");
         const textNode = document.createTextNode(line);
         listItem.appendChild(textNode);
         userList.appendChild(listItem);
