@@ -16,7 +16,7 @@ window.onload = function() {
     loadUser();
 }
 
-const loadUser = function(){
+const loadUser = function(useEffect = false){
     while (userList.firstChild) {
         userList.removeChild(userList.firstChild);
     }
@@ -26,18 +26,28 @@ const loadUser = function(){
       const seed = new Random(shuffleSourceSeed)
       const shuffledLines = shuffleArray(data,seed)
       shuffledLines.forEach(function(line) {
-        const listItem = document.createElement("li");
+        const listItem = document.creataeElement("li");
         const textNode = document.createTextNode(line);
         listItem.appendChild(textNode);
         userList.appendChild(listItem);
-      });
+     });
+      if(useEffect)
+      {
+        const elementList = document.querySelectorAll('li');
+        const effectList = new Array();
+        for (let i = 0; i < elementList.length; i++) {
+          let element = elementList[i];
+          effectList[i] = new ShuffleText(element);
+          effectList[i].start();
+        }
+      }
     });
 }
 const shuffleUser = function(){
   const seed =  new Random(shuffleSourceSeed)
   shuffleSourceSeed = seed.nextInt(10000000,99999999)
   localStorage.setItem("sourceSeed",shuffleSourceSeed)
-  loadUser();
+  loadUser(useEffect=true);
 }
 
 class Random {
